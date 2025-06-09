@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathMaster - Тренажёр математики</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="background-container"></div>
+    
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box">
+            <h2>Добро пожаловать в MathMaster!</h2>
+            <div class="auth-form">
+                <input type="text" id="username" placeholder="Имя пользователя" class="auth-input">
+                <input type="password" id="password" placeholder="Пароль" class="auth-input">
+                <button id="loginBtn" class="auth-btn">Войти</button>
+                <button id="registerBtn" class="auth-btn secondary">Зарегистрироваться</button>
+                <p class="auth-message" id="authMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer" style="display: none;">
+        <header class="header">
+            <div class="user-info">
+                <span id="usernameDisplay"></span>
+                <div class="coins-hints">
+                    <span class="coins">🪙 <span id="coinsCount">0</span></span>
+                    <span class="hints">💡 <span id="hintsCount">0</span></span>
+                </div>
+            </div>
+            <button class="btn shop-btn" id="shopBtn">Магазин</button>
+            <button class="btn logout-btn" id="logoutBtn">Выйти</button>
+        </header>
+
+        <main class="main-content">
+            <div class="level-selector" id="levelSelector">
+                <h2>Выберите уровень сложности</h2>
+                <div class="levels">
+                    <button class="level-btn" data-level="1">Новичок (+, -)</button>
+                    <button class="level-btn" data-level="2">Ученик (×, ÷)</button>
+                    <button class="level-btn" data-level="3">Мастер (степени)</button>
+                    <button class="level-btn" data-level="4">Гуру (корни, модули)</button>
+                    <button class="level-btn" data-level="5">Легенда (комбинированные)</button>
+                </div>
+            </div>
+
+            <div class="game-container" id="gameContainer" style="display: none;">
+                <div class="game-header">
+                    <h2 id="levelTitle">Уровень 1: Новичок</h2>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                        <span class="progress-text" id="progressText">0/10</span>
+                    </div>
+                </div>
+
+                <div class="problem-container">
+                    <div class="problem" id="problem"></div>
+                    <input type="text" id="answer" class="answer-input" placeholder="Ваш ответ...">
+                    <button class="btn submit-btn" id="submitBtn">Проверить</button>
+                    <button class="btn hint-btn" id="hintBtn">Использовать подсказку (💡)</button>
+                </div>
+
+                <div class="result-message" id="resultMessage"></div>
+            </div>
+
+            <div class="level-complete" id="levelComplete" style="display: none;">
+                <h2>Уровень пройден! 🎉</h2>
+                <p>Вы заработали <span id="earnedCoins">0</span> 🪙</p>
+                <div class="complete-buttons">
+                    <button class="btn next-level-btn" id="nextLevelBtn">Следующий уровень</button>
+                    <button class="btn return-btn" id="returnBtn">Вернуться к выбору уровня</button>
+                </div>
+            </div>
+        </main>
+
+        <div class="shop-overlay" id="shopOverlay">
+            <div class="shop-container">
+                <div class="shop-header">
+                    <h2>Магазин</h2>
+                    <button class="close-shop" id="closeShopBtn">×</button>
+                </div>
+                <div class="shop-tabs">
+                    <button class="shop-tab active" data-tab="items">Предметы</button>
+                    <button class="shop-tab" data-tab="backgrounds">Фоны</button>
+                    <button class="shop-tab" data-tab="fonts">Шрифты</button>
+                    <button class="shop-tab" data-tab="promo">Промокод</button>
+                </div>
+                
+                <div class="shop-content" id="itemsTab">
+                    <div class="shop-item">
+                        <h3>Подсказка</h3>
+                        <p>Показывает правильный ответ</p>
+                        <div class="item-footer">
+                            <span class="item-price">25 🪙</span>
+                            <button class="btn buy-btn" data-item="hint">Купить</button>
+                        </div>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Фейерверк</h3>
+                        <p>Праздничный фейерверк при завершении уровня</p>
+                        <div class="item-footer">
+                            <span class="item-price">15 🪙</span>
+                            <button class="btn buy-btn" data-item="firework">Купить</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shop-content" id="backgroundsTab" style="display: none;">
+                    <div class="grid-container" id="backgroundsGrid">
+                        <!-- Backgrounds will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="shop-content" id="fontsTab" style="display: none;">
+                    <div class="grid-container" id="fontsGrid">
+                        <!-- Fonts will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="shop-content" id="promoTab" style="display: none;">
+                    <div class="promo-container">
+                        <input type="text" id="promoCode" placeholder="Введите промокод">
+                        <button class="btn" id="applyPromoBtn">Применить</button>
+                        <p id="promoMessage"></p>
+                        <div class="promo-hints">
+                            <h3>Доступные промокоды:</h3>
+                            <ul>
+                                <li><strong>777</strong> - 777 монет</li>
+                                <li><strong>noob</strong> - 10 подсказок</li>
+                                <li><strong>mathgenius</strong> - 5 фейерверков</li>
+                                <li><strong>background</strong> - 3 случайных фона</li>
+                                <li><strong>font</strong> - 3 случайных шрифта</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="inventory">
+                    <h3>Ваш инвентарь</h3>
+                    <div class="inventory-items">
+                        <div>
+                            <h4>Подсказки: <span id="invHints">0</span></h4>
+                            <h4>Фейерверки: <span id="invFireworks">0</span></h4>
+                        </div>
+                        <div>
+                            <h4>Фоны: <span id="invBackgrounds">0</span></h4>
+                            <h4>Шрифты: <span id="invFonts">0</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fireworksContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
+    <script src="auth.js"></script>
+    <script src="shop.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>
