@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathMaster - Тренажёр математики</title>
+    <title>MathMaster Pro</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -13,13 +13,14 @@
     
     <div class="auth-container" id="authContainer">
         <div class="auth-box">
-            <h2>Добро пожаловать в MathMaster!</h2>
+            <h2>MathMaster Pro</h2>
             <div class="auth-form">
                 <input type="text" id="username" placeholder="Имя пользователя" class="auth-input">
                 <input type="password" id="password" placeholder="Пароль" class="auth-input">
                 <button id="loginBtn" class="auth-btn">Войти</button>
                 <button id="registerBtn" class="auth-btn secondary">Зарегистрироваться</button>
                 <p class="auth-message" id="authMessage"></p>
+                <button id="showPromoBtn" class="auth-btn promo-btn">s11</button>
             </div>
         </div>
     </div>
@@ -69,7 +70,7 @@
             </div>
 
             <div class="level-complete" id="levelComplete" style="display: none;">
-                <h2>Уровень пройден! 🎉</h2>
+                <h2>Уровень пройден! �</h2>
                 <p>Вы заработали <span id="earnedCoins">0</span> 🪙</p>
                 <div class="complete-buttons">
                     <button class="btn next-level-btn" id="nextLevelBtn">Следующий уровень</button>
@@ -102,24 +103,36 @@
                     </div>
                     <div class="shop-item">
                         <h3>Фейерверк</h3>
-                        <p>Праздничный фейерверк при завершении уровня</p>
+                        <p>Праздничный фейерверк с наградой</p>
                         <div class="item-footer">
                             <span class="item-price">15 🪙</span>
                             <button class="btn buy-btn" data-item="firework">Купить</button>
                         </div>
                     </div>
+                    <div class="shop-item">
+                        <h3>Случайный фон</h3>
+                        <p>Получите случайный новый фон</p>
+                        <div class="item-footer">
+                            <span class="item-price">30 🪙</span>
+                            <button class="btn buy-btn" data-item="randomBg">Крутить</button>
+                        </div>
+                    </div>
+                    <div class="shop-item">
+                        <h3>Случайный шрифт</h3>
+                        <p>Получите случайный новый шрифт</p>
+                        <div class="item-footer">
+                            <span class="item-price">40 🪙</span>
+                            <button class="btn buy-btn" data-item="randomFont">Крутить</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="shop-content" id="backgroundsTab" style="display: none;">
-                    <div class="grid-container" id="backgroundsGrid">
-                        <!-- Backgrounds will be loaded here -->
-                    </div>
+                    <div class="grid-container" id="backgroundsGrid"></div>
                 </div>
                 
                 <div class="shop-content" id="fontsTab" style="display: none;">
-                    <div class="grid-container" id="fontsGrid">
-                        <!-- Fonts will be loaded here -->
-                    </div>
+                    <div class="grid-container" id="fontsGrid"></div>
                 </div>
                 
                 <div class="shop-content" id="promoTab" style="display: none;">
@@ -127,7 +140,7 @@
                         <input type="text" id="promoCode" placeholder="Введите промокод">
                         <button class="btn" id="applyPromoBtn">Применить</button>
                         <p id="promoMessage"></p>
-                        <div class="promo-hints">
+                        <div class="promo-hints" id="promoHints" style="display: none;">
                             <h3>Доступные промокоды:</h3>
                             <ul>
                                 <li><strong>777</strong> - 777 монет</li>
@@ -148,8 +161,8 @@
                             <h4>Фейерверки: <span id="invFireworks">0</span></h4>
                         </div>
                         <div>
-                            <h4>Фоны: <span id="invBackgrounds">0</span></h4>
-                            <h4>Шрифты: <span id="invFonts">0</span></h4>
+                            <h4>Фоны: <span id="invBackgrounds">0</span>/60</h4>
+                            <h4>Шрифты: <span id="invFonts">0</span>/60</h4>
                         </div>
                     </div>
                 </div>
@@ -158,6 +171,10 @@
     </div>
 
     <div id="fireworksContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+    <div id="rewardPopup" class="reward-popup"></div>
+
+    <audio id="winSound" src="sounds/win.mp3" preload="auto"></audio>
+    <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
 
     <script src="auth.js"></script>
     <script src="shop.js"></script>
